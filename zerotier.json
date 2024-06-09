@@ -1,0 +1,80 @@
+{
+    "ZeroTierRouter": {
+        "containers": {
+            "zerotier": {
+                "image": "zyclonite/zerotier",
+                "tag": "router",
+                "launch_order": 1,
+                "opts": [
+                    [
+                        "--cap-add",
+                        "NET_ADMIN"
+                    ],
+                    [
+                        "--cap-add",
+                        "SYS_ADMIN"
+                    ],
+                    [
+                        "--cap-add",
+                        "NET_RAW"
+                    ],
+                    [
+                        "--device",
+                        "/dev/net/tun"
+                    ],
+                    [
+						"--net",
+						"host"
+					]
+                ],
+                "ports" : {
+                    "9993": {
+                        "description": "Default inbound port.",
+                        "host_default": 9993,
+                        "label": "Inbound port",
+                        "protocol": "udp",
+                        "ui": true
+                    }
+                },
+                "volumes": {
+					"/var/lib/zerotier-one": {
+						"description": "Choose a share for ZeroTier configuration. E.g.: create a Share called ZeroTier-config for this purpose alone.",
+						"label": "ZeroTier config"
+					}
+				},
+                "environment": {
+                    "ZEROTIER_ONE_LOCAL_PHYS": {
+                        "description": "a space-separated list of physical interfaces that should be configured to participate in NAT-based routing.",
+                        "label": "Interfaces",
+                        "index": 1
+                    },
+                    "ZEROTIER_ONE_USE_IPTABLES_NFT": {
+                        "description": "controls the command the container uses to set up NAT forwarding. Try false as default. true if having problems",
+                        "label": "Use NFT",
+                        "index": 2
+                    },
+                    "ZEROTIER_ONE_GATEWAY_MODE": {
+                        "description": "controls the traffic direction. inbound. outbound. or both, use the word both",
+                        "label": "Mode",
+                        "index": 3
+                    },
+                    "ZEROTIER_ONE_NETWORK_IDS": {
+                        "description": "a space-separated list of ZeroTier network IDs. This variable is only effective on first launch.",
+                        "label": "Secret ID",
+                        "index": 4
+                    }
+                }
+            }
+        },
+        "description": "<p><a href='https://www.zerotier.com/'>ZeroTier</a>⁠ is a smart programmable Ethernet switch for planet Earth. It allows all networked devices, VMs, containers, and applications to communicate as if they all reside in the same physical data center or cloud region.",
+        
+        "more_info": "<p><a href='https://github.com/zyclonite/zerotier-docker/blob/main/README-router.md'>more info.</a>",
+        "ui": {
+            "https": false,
+            "slug": ""
+        },
+        "volume_add_support": false,
+        "website": "https://github.com/zyclonite/zerotier-docker/blob/main/README-router.md",
+        "version": "1.14.0"
+    }
+}
